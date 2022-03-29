@@ -1,0 +1,6 @@
+/__test__
+/cache
+/coverage
+/examples
+jest.config.js
+.gitignore

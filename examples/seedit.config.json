@@ -1,0 +1,10 @@
+{
+	"url": "mongodb://localhost:27017/",
+	"db": "test",
+	"collections": {
+		"name": "test",
+		"path": "/templates/users.json"
+	},
+	"amount": 1000,
+	"delete": true
+}

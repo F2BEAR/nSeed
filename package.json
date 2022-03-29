@@ -1,0 +1,56 @@
+{
+	"name": "seed-it",
+	"version": "1.0.0",
+	"description": "A NodeJS CLI Tool for MongoDB seeding with auto-generated data.",
+	"main": "bin/seedIt.js",
+	"bin": {
+		"seedit": "bin/seedIt.js",
+		"seedIt": "bin/seedIt.js",
+		"seed-it": "bin/seedIt.js"
+	},
+	"publishConfig": {
+		"access": "public",
+		"tag": "1.0.0"
+	},
+	"preferGlobal": true,
+	"scripts": {
+		"test": "jest",
+		"standard": "npx standard",
+		"standard-fix": "npx standard --fix"
+	},
+	"keywords": [
+		"cli",
+		"seedit",
+		"mongodb",
+		"seeder",
+		"db"
+	],
+	"author": "Facundo Carbonel",
+	"license": "MIT",
+	"dependencies": {
+		"@faker-js/faker": "^6.0.0-alpha.7",
+		"arg": "^5.0.1",
+		"chalk": "^4.1.2",
+		"cli-table": "^0.3.6",
+		"esm": "^3.2.25",
+		"inquirer": "^8.2.0",
+		"mongodb": "^4.1.3",
+		"progress": "^2.0.3"
+	},
+	"devDependencies": {
+		"jest": "^27.3.1",
+		"mock-argv": "^2.0.8",
+		"mock-cwd": "^1.0.0",
+		"standard": "^16.0.4"
+	},
+	"standard": {
+		"ignore": [
+			"/__tests__/*",
+			"/dist/*",
+			"/coverage/*",
+			"/node_modules/*",
+			"/examples/*",
+			"jest.config.js"
+		]
+	}
+}
