@@ -1,20 +1,25 @@
-module.exports = {
+import type { Config } from "@jest/types"
+
+const config: Config.InitialOptions = {
+	preset: "ts-jest",
 	testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
 	clearMocks: true,
 	collectCoverage: true,
 	collectCoverageFrom: [
-		'**/*.{js}',
+		'**/*.{ts}',
 		'**/src/**',
-		'!**/src/types.js',
+		'!**/src/types.ts',
+		'!**/src/index.ts',
 		'!**/examples/**',
-		'!**/bin/**',
+		'!**/lib/**',
 		'!**/node_modules/**',
-		'!**/tests/**'
+		'!**/__test__/**'
 	],
 	coverageDirectory: 'coverage',
 	coverageProvider: 'babel',
-	moduleFileExtensions: ['js'],
+	moduleFileExtensions: ['ts', 'js'],
 	testEnvironment: 'node',
-	testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
 	verbose: true
 }
+
+export default config

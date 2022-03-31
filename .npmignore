@@ -2,5 +2,8 @@
 /cache
 /coverage
 /examples
+/src
 jest.config.js
 .gitignore
+fakertypes.txt
+tsconfig.json

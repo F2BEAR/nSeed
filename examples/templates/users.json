@@ -1,13 +1,6 @@
 {
-	"status": "sent",
-	"origin": "smtp",
-	"subject": ".lorem.sentence",
-	"client": ".ObjectId.5b35244a3c10369728168182",
-	"subscriber": ".ObjectId.603d2a25e7575c1780f3d08c",
-	"send_from": ".internet.email",
-	"from_name": ".company.companyName",
-	"send_to": ".internet.email",
-	"list": ".lorem.word",
-	"created": ".date.past",
-	"processed_at": ".date.past"
+	"firstName": ".name.firstName",
+	"lastName": ".name.lastName",
+	"gender": ".name.gender",
+	"job": ".name.jobTitle"
 }

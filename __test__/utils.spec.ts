@@ -5,18 +5,18 @@ describe('Test the utils.js functions', () => {
 
 	test('The hasConfig() function should return the config file when it exists', () => {
         mockCwd('D:/dev/mongo seeder/examples', async () => {
-            await utils.hasConfig().then((result) => {
+            await utils.hasConfig().then((result: any) => {
                 expect(result).toStrictEqual(
                     expect.objectContaining({
                         exists: true, 
                         config: {
                             "url": "mongodb://localhost:27017/",
                             "db": "test",
-                            "collections": {
-                                "name": "test-users",
+                            "collection": {
+                                "name": "users",
                                 "path": "/templates/users.json"
                             },
-                            "amount": 1000,
+                            "amount": 2000,
                             "delete": true
                         } 
                     })
@@ -27,7 +27,7 @@ describe('Test the utils.js functions', () => {
 
     test('The hasTemplate() function should return true when it exists', () => {
         mockCwd('D:/dev/mongo seeder/examples', async () => {
-            await utils.hasTemplate('./examples/templates/users.json').then((result) => {
+            await utils.hasTemplate('./examples/templates/users.json').then((result: any) => {
                 expect(result).toStrictEqual(
                     expect.objectContaining({
                         exists: true, 
@@ -40,7 +40,7 @@ describe('Test the utils.js functions', () => {
 
     test('The hasConfig() function should return false when it does not exist', () => {
         mockCwd('/bad-path', async () => {
-            await utils.hasConfig('/does-not-exist').then((result) => {
+            await utils.hasConfig('/does-not-exist').then((result: any) => {
                 expect(result).toStrictEqual(
                     expect.objectContaining({
                         exists: false, 
@@ -53,7 +53,7 @@ describe('Test the utils.js functions', () => {
 
     test('The hasTemplate() function should return false when it does not exist', () => {
         mockCwd('/bad-path', async () => {
-            await utils.hasTemplate('/does-not-exist').then((result) => {
+            await utils.hasTemplate('/does-not-exist').then((result: any) => {
                 expect(result).toStrictEqual(
                     expect.objectContaining({
                         exists: false, 

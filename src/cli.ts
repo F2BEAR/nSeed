@@ -6,7 +6,7 @@ const { help } = require('./help')
 const { hasConfig } = require('./utils')
 const { main } = require('./main')
 
-const parseArguments = (rawArgs) => {
+const parseArguments = (rawArgs: string | any[]) => {
   try {
     const args = arg(
       {
@@ -40,13 +40,13 @@ const parseArguments = (rawArgs) => {
       collection: args['--collection'] || '',
       db: args['--database'] || ''
     }
-  } catch (err) {
+  } catch (err: any | unknown) {
     console.error(chalk.red.bold('ERROR:'), err.message)
     process.exit(5)
   }
 }
 
-const promptForMissingOptions = async (options) => {
+const promptForMissingOptions = async (options: { uri: any; version: boolean; help: boolean; delete: any; template: any; amount: any; collection: any; db: any } | undefined) => {
   const questions = []
 
   if (!options || options === undefined) {
@@ -58,7 +58,7 @@ const promptForMissingOptions = async (options) => {
 
   const uriRegex = /^(mongodb(?:\+srv)?(\:)(?:\/{2}){1})(?:\w+\:\w+\@)?(\w+?(?:\.\w+?)*)(\:)(\d+(?:\/){0,1})(?:\/\w+?)?(?:\?\w+?\=\w+?(?:\&\w+?\=\w+?)*)?$/gm.test(options.uri)
 
-  if (!uriRegex || uriRegex === false) {
+  if (!uriRegex) {
     console.error(
       chalk.red.bold('Error:'),
       'you must provide a valid MongoDB connection string.'
@@ -93,7 +93,7 @@ const promptForMissingOptions = async (options) => {
     })
   }
 
-  if (!options.amount || options.amount === '') {
+  if (!options.amount) {
     questions.push({
       type: 'input',
       name: 'amount',
@@ -105,14 +105,14 @@ const promptForMissingOptions = async (options) => {
 
   const amountChk = /\d/i.test(options.amount ? options.amount : answers.amount)
 
-  if (!amountChk || amountChk === false) {
+  if (!amountChk) {
     console.error(chalk.red.bold('ERROR:'), 'The amount must be a number')
     process.exit(9)
   }
 
   const tmplCheck = /^\.(.+)\/([^\/]+)\.json$/gm.test(options.template ? options.template : answers.template)
 
-  if (!tmplCheck || tmplCheck === false) {
+  if (!tmplCheck) {
     console.error(chalk.red.bold('ERROR:'), 'The provided path for the template does not comply with the format ./*/*.json')
     process.exit(9)
   }
@@ -128,7 +128,7 @@ const promptForMissingOptions = async (options) => {
   }
 }
 
-const helper = (options) => {
+const helper = (options: { uri: string; version: boolean; help: boolean; delete: boolean; template: string; amount: number; collection: string; db: string }) => {
   if (options.version) {
     console.log(version)
   }
@@ -138,22 +138,22 @@ const helper = (options) => {
   }
 }
 
-module.exports.cli = async (args) => {
-  let options = parseArguments(args)
+module.exports.cli = async (args: string | any[]) => {
+  let options: { uri: string; version: boolean; help: boolean; delete: boolean; template: string; amount: number; collection: string; db: string }= parseArguments(args)
   const del = false
   if (options.version || options.help) {
     helper(options)
   } else {
     await hasConfig()
-    .then(async (e) => {
+    .then(async (e: { exists: boolean; config: any }) => {
       if (e.exists) {
         const config = e.config
         await main(
           config.url,
           config.amount,
           config.db,
-          config.collections.name,
-          config.collections.path,
+          config.collection.name,
+          config.collection.path,
           config.delete || del
         )
       } else {
@@ -168,7 +168,7 @@ module.exports.cli = async (args) => {
         )
       }
     })
-    .catch((err) => {
+    .catch((err: any | unknown) => {
       console.error(err)
     })
   }

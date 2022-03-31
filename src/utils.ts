@@ -4,20 +4,20 @@ const { promisify } = require('util')
 
 const fsStat = promisify(stat)
 
-const fileExists = async (path) => {
+const fileExists = async (path:string) => {
   try {
-    const stat = await fsStat(path).catch((err) => {
+    const stat = await fsStat(path).catch((err: string | undefined) => {
       throw new Error(err)
     })
     const file = stat.isFile()
     return { exists: true, isFile: file }
-  } catch (err) {
+  } catch (err: any | unknown) {
     const message = err.message
     return { exists: false, message: message }
   }
 }
 
-module.exports.hasTemplate = async (tmpPath) => {
+module.exports.hasTemplate = async (tmpPath:string) => {
   const exists = await fileExists(tmpPath)
   return exists
 }

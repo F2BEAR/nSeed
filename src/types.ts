@@ -1,7 +1,7 @@
 const {faker} = require('@faker-js/faker')
 const { ObjectId } = require('mongodb')
 
-const id = async (value) => {
+const id = async (value: string | undefined | null) => {
   if (value === undefined || value === '' || value === null) {
     const newId = new ObjectId()
     return newId
@@ -10,7 +10,7 @@ const id = async (value) => {
   }
 }
 
-const address = async (value) => {
+const address = async (value: string) => {
   switch (value) {
     case 'cardinalDirection':
       return faker.address.cardinalDirection()
@@ -62,7 +62,7 @@ const address = async (value) => {
   }
 }
 
-const animals = async (value) => {
+const animals = async (value: string) => {
   switch (value) {
     case 'bear':
       return faker.internet.bear()
@@ -98,7 +98,7 @@ const animals = async (value) => {
   }
 }
 
-const commerce = async (value) => {
+const commerce = async (value: string) => {
   switch (value) {
     case 'color':
       return faker.commerce.color()
@@ -122,7 +122,7 @@ const commerce = async (value) => {
   }
 }
 
-const company = async (value) => {
+const company = async (value: string) => {
   switch (value) {
     case 'bs':
       return faker.company.bs()
@@ -152,7 +152,7 @@ const company = async (value) => {
   }
 }
 
-const database = async (value) => {
+const database = async (value: string) => {
   switch (value) {
     case 'collation':
       return faker.database.collation()
@@ -168,7 +168,7 @@ const database = async (value) => {
   }
 }
 
-const datatype = async (value) => {
+const datatype = async (value:string) => {
   switch (value) {
     case 'array':
       return faker.datatype.array()
@@ -196,7 +196,7 @@ const datatype = async (value) => {
   }
 }
 
-const date = async (value) => {
+const date = async (value: string) => {
   switch (value) {
     case 'between':
       return faker.date.between()
@@ -220,7 +220,7 @@ const date = async (value) => {
   }
 }
 
-const finance = async (value) => {
+const finance = async (value: string) => {
   switch (value) {
     case 'account':
       return faker.finance.account()
@@ -262,7 +262,7 @@ const finance = async (value) => {
   }
 }
 
-const git = async (value) => {
+const git = async (value: string) => {
   switch (value) {
     case 'branch':
       return faker.git.branch()
@@ -280,7 +280,7 @@ const git = async (value) => {
   }
 }
 
-const hacker = async (value) => {
+const hacker = async (value: string) => {
   switch (value) {
     case 'abbreviation':
       return faker.hacker.abbreviation()
@@ -300,7 +300,7 @@ const hacker = async (value) => {
   }
 }
 
-const helpers = async (value) => {
+const helpers = async (value: string) => {
   switch (value) {
     case 'contextualCard':
       return faker.helpers.contextualCard()
@@ -316,7 +316,7 @@ const helpers = async (value) => {
   }
 }
 
-const image = async (value) => {
+const image = async (value: string) => {
   switch (value) {
     case 'abstract':
       return faker.image.abstract()
@@ -358,7 +358,7 @@ const image = async (value) => {
   }
 }
 
-const internet = async (value) => {
+const internet = async (value: string) => {
   switch (value) {
     case 'avatar':
       return faker.lorem.avatar()
@@ -400,7 +400,7 @@ const internet = async (value) => {
   }
 }
 
-const lorem = async (value) => {
+const lorem = async (value: string) => {
   switch (value) {
     case 'lines':
       return faker.lorem.lines()
@@ -426,7 +426,7 @@ const lorem = async (value) => {
   }
 }
 
-const music = async (value) => {
+const music = async (value: string) => {
   switch (value) {
     case 'genre':
       return faker.music.genre()
@@ -436,7 +436,7 @@ const music = async (value) => {
   }
 }
 
-const name = async (value) => {
+const name = async (value: string) => {
   switch (value) {
     case 'findName':
       return faker.name.findName()
@@ -468,7 +468,7 @@ const name = async (value) => {
   }
 }
 
-const phone = async (value) => {
+const phone = async (value: string) => {
   switch (value) {
     case 'phoneFormats':
       return faker.phone.phoneFormats()
@@ -482,7 +482,7 @@ const phone = async (value) => {
   }
 }
 
-const random = async (value) => {
+const random = async (value: string) => {
   switch (value) {
     case 'alpha':
       return faker.random.alpha()
@@ -504,7 +504,7 @@ const random = async (value) => {
   }
 }
 
-const system = async (value) => {
+const system = async (value: string) => {
   switch (value) {
     case 'commonFileExt':
       return faker.system.commonFileExt()
@@ -532,7 +532,7 @@ const system = async (value) => {
   }
 }
 
-const time = async (value) => {
+const time = async (value: string) => {
   switch (value) {
     case 'recent':
       return faker.time.recent()
@@ -542,7 +542,7 @@ const time = async (value) => {
   }
 }
 
-const vehicle = async (value) => {
+const vehicle = async (value: string) => {
   switch (value) {
     case 'bicycle':
       return faker.vehicle.bicycle()
@@ -568,7 +568,7 @@ const vehicle = async (value) => {
   }
 }
 
-const word = async (value) => {
+const word = async (value: string) => {
   switch (value) {
     case 'adjective':
       return faker.word.adjective()
@@ -590,7 +590,7 @@ const word = async (value) => {
   }
 }
 
-module.exports.fakerTypes = async (type, value) => {
+module.exports.fakerTypes = async (type: string, value: string) => {
   switch (type) {
     case 'ObjectId':
       const idValue = await id(value)

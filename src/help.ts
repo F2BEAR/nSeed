@@ -1,14 +1,11 @@
-const chalk = require('chalk')
 const Table = require('cli-table')
 module.exports.help = () => {
   const header = '  @@@@@@   @@@@@@@@  @@@@@@@@  @@@@@@@      @@@  @@@@@@@\n  @@@@@@@   @@@@@@@@  @@@@@@@@  @@@@@@@@     @@@  @@@@@@@\n  !@@       @@!       @@!       @@!  @@@     @@!    @@!  \n  !@!       !@!       !@!       !@!  @!@     !@!    !@!  \n  !!@@!!    @!!!:!    @!!!:!    @!@  !@!     !!@    @!!  \n   !!@!!!   !!!!!:    !!!!!:    !@!  !!!     !!!    !!!  \n       !:!  !!:       !!:       !!:  !!!     !!:    !!:  \n      !:!   :!:       :!:       :!:  !:!     :!:    :!:  \n  :::::::   ::::::::  ::::::::  ::::::::     :::    :::  \n  ::::::    :::::::   :::::::   :::::::      :::    :::  '
-  console.log(chalk.bold('\n', header))
-  console.log(chalk.italic('\nThe Node.Js Data Seeder'))
+  console.log('\n', header)
+  console.log('\nThe Node.Js Data Seeder')
   console.log('\nBasic Usage:\nseedit [connection string] [options]')
   console.log(
-    chalk(
       '\nExample: seedit mongodb+srv://user:pwd@my.server.com:27017/DbName?tls=true\n'
-    )
   )
 
   console.log(

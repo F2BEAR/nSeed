@@ -1,6 +1,5 @@
 const mockArgv = require('mock-argv')
 const { cli } = require('../src/cli')
-const { version } = require('../package.json')
 
 describe('Test the CLI function', () => {
 
@@ -16,7 +15,7 @@ describe('Test the CLI function', () => {
         console.log = jest.fn();
         mockArgv(['-v'], () => {
             cli(process.argv)
-            expect(console.log).toHaveBeenCalledWith(version)
+            expect(console.log).toHaveBeenCalledWith("1.0.0")
         })
 	})
 })
