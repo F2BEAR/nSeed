@@ -1,109 +1,120 @@
-# Seed It
+# nSeed
 
-La idea de este proyecto es tener una herramienta CLI para Node.js con la cual podamos hacer seeding de data auto generada para MongoDB.
+_The Node.Js Data Seeder_
 
-1. Estaría bueno poder configurar la herramienta desde un archivo en la carpeta donde se está runeando la app.
-2. Tendría que poder leer templates de la data hechos en JSON.
-3. Me gustaría que puedas especificar cuantos documentos te gustaría que se generen a partir del template.
-4. El comando básico para poder usar esta herramienta debería ser algo así como `seedit [connection string] [pathToTemplate] [amount]`
-5. Me gustaría que pueda ser descargable desde npm para usarla como herramienta global o dentro del proyecto y además que haya una versión web donde puedas usar seed it desde un cliente.
+<p>
+	<a href="https://www.npmjs.com/package/nSeed"><img src="https://img.shields.io/npm/v/nSeed"></a>
+    <a href="https://github.com/F2BEAR/nSeed/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green"></a>
+	<a href="https://github.com/F2BEAR/nSeed/issues"><img src="https://img.shields.io/github/issues/F2BEAR/nSeed"></a>
+	<a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg"></a>
+</p>
 
-## Instalación
+----------------
 
-Seed it debe de estar disponible para ser instalado de forma global o local usando npm:
-`npm install --save-dev seedit` o `npm install -g seedit`
+## Overview
 
-si se installa como dependencia de desarrollo es posible usar seed it con npx:
-`npx seedit [required arguments]`
+nSeed is an Open-Source CLI Tool for NodeJS used to generate and seed your database with fake data for testing purposes.
 
-## Uso básico
+We use [faker.js](https://fakerjs.dev) to generate the seeds.
 
-Queremos que esta sea una herramienta ligera e intuitiva por lo cual por el momento no se contempla que tenga muchas funcionalidades por fuera de lo que promete: Dado un string de conexión, un template y una cantidad de documentos a generar, seed it va a hacer seeding en tu base de datos.
+## Installation
 
-La forma más básica de utilizar el CLI es la siguiente:
-`seedit [connection string] -p [path to template] -a [amount]`
+You can install it locally, globally or as a dev dependency with both npm and yarn:
 
-Un ejemplo de esto sería:
-`seedit 'mongodb://localhost:27017/TEST' -p './template.json' -a 255`
+- _local:_
+
+  `npm install nseed` or `yarn add nseed`
+
+- _dev:_
+
+  `npm install --save-dev nseed` or `yarn add nseed --dev` 
+
+- _global:_
+
+  `npm install -g nseed` or `yarn global add nseed`
+
+## Basic Usage
+
+We want nSeed to be an easy and intuitive tool, so having tons of functionalities was not intended apart from what it promises: 
+
+_" Giving a connection string, a template and the amount of documents to be created, this tool will generate fake data and seed it into your database. "_
+
+Currently we only support MongoDB databases, but we plan to expand it to other kind of databases such as MySQL, CouchDB, Redis, etc.
+
+The most basic usage is as it follows:
+
+`nseed [connection string] -d [database name] -t [path to template] -a [amount]`
+
+If you installed it as a dev dependency you can use it with npx:
+
+`npx nseed [connection string] -d [database name] -t [path to template] -a [amount]`
 
 # CLI
 
-| Opción       | Alias | Descripción                                                                                                            |
-| ------------ | ----- | ---------------------------------------------------------------------------------------------------------------------- |
-| --path       | -p    | Flag para especificar el path a un template                                                                            |
-| --collection | -c    | El nombre de la colección, si no está especificada se usara el nombre del template                                     |
-| --amount     | -a    | Permite especificar la cantidad de documentos que se desean generar                                                    |
+| Options | Alias | Description |
+| -------|-------|-------------|
+| --db | -d | Flag used to specify the name of the database to be seeded. |
+| --collection | -c | A string denoting the name of the collection to be generated. |
+| --tmpl | -t | A Flag to specify the path for the templates to be used. |
+| --amount | -a | The number of documents to be generated. |
+| --del | N/A | Indicates that the database must be dropped before seeding. |
+| --version | -v | Displays the current version. |
+| --help | -h | Displays help. |
 
-Ejemplo:
+> Note:
+>
+> The connection string is mandatory, if it's not provided before the options nSeed will throw an error.
+>
+> The path for the template MUST be a relative path. _(i.e: ./foo/bar.json)_
+
+Example:
 
 ```shell
-seedit "mongodb://localhost:27017/TEST" -c Users -p './template.json' -a 2000
+nseed mongodb://localhost:27017/ -d Test -c Users -t './template.json' -a 2000
+```
 
 # Templates
 
-La estructura de los templates debería ser la siguiente:
+The structure of the templates should be as it follows:
 
 ```json
 {
-	"campo 1": "tipo",
-	"campo 2": "tipo",
-	"campo 3": ["tipo"],
-	"campo 4": {
-		"atributo 1": "tipo",
-		"atributo 2": "tipo",
-		"atributo 3": "tipo"
+	"foo": "bar1",
+	"foo": "bar",
+	"foo": ["bar"],
+	"foo": {
+		"foo": "baz",
+		"foo": "baz",
+		"foo": "baz"
 	}
 }
 ```
 
-- Tiene que poder aceptar todos los [tipos de faker](https://fakerjs.dev/guide/).
-- Se debe de verificar que los tipos de datos del template son correctos para asegurarse de que la data generada sea válida.
-
-Estaría bueno poder indicar que datos son o no son requeridos, si son únicos y un porcentaje de la frecuencia en la que quieres que aparezcan los que no sean obligatorios; se podría declarar un objeto donde va el tipo del campo y que en lugar de tener propiedades de un objeto tenga definiciones para ese campo:
+The values on the template can be any kind of valid [JSON Data Type](https://www.w3schools.com/js/js_json_datatypes.asp); but in order to use autogenerated data with the faker types you must provide a string starting with a dot:
 
 ```json
 {
-	"firstName": { "type": "string", "required": true },
-	"email": { "type": "string", "required": true, "unique": true }
+	"firstName": ".name.firstName",
+	"lastName": ".name.lastName",
+	"job": ".name.jobTitle",
+	"address" :{
+		"line1": "529 14th St NW",
+		"line2": "Apt. 742",
+		"state": "Florida",
+		"zip": 33054,
+	},
+	"interests":["Sports", "Videogames", "Technology"],
+	"activeUser": true
 }
 ```
 
-Seed it debería de poder diferenciar entre una definición del dato como lo es la anterior a un objeto el cual tiene que mostrarse como tal; por ejemplo, si el usuario quiere generar dentro del template un objeto llamado address el cual tiene como atributos los datos de la dirección por separado como son el número de puerta o la calle seed it debería de reconocer esto como tal:
+We support most of the [Faker API Types](FAKERGUIDE), check the Faker Types section bellow for reference.
 
-```json
-{
-	"firstName": { "type": "string", "required": true },
-	"addres": {
-		"AddressLine1": { "type": "string", "required": true },
-		"AddressLine2": { "type": "string", "required": false, "frequency": 60 },
-		"city": { "type": "string", "required": true },
-		"state": { "type": "string", "required": true },
-		"zip": "string",
-		"country": { "type": "string", "required": true }
-	}
-}
-```
+# Configuration
 
-# Configuración
+You can configure _nSeed_ with a nseed.config.json file; this gives you the capacity to generate specific configuration per each project you and your team are working on, making it suitable for container environments such as Docker.
 
-Poder configurar la herramienta con un archivo .seeditrc o un seedit.config.json sería una de sus características más importantes; esto nos daría la capacidad de poder generar configuraciones específicas para cada proyecto que desarrollemos, pudiendo incluso facilitarnos su uso en los contenedores de Docker que usemos para ambientes de Dev, Test y Stage.
-
-La idea es poder realizar las siguientes configuraciones:
-
-1. La url a donde tengamos que hacer el seed
-2. La configuración de las colecciones:
-   - Un objeto conteniendo el nombre de la colección y el path del template en caso de ser una sola colección.
-   - Un array de objetos como el anterior en caso de querer seedear más de una colección.
-3. La cantidad de documentos a generar:
-   - Si se define de forma global se debe verificar si hay más de una colección y si las hay dividir esta cantidad en partes iguales para cada coleccion
-   - En caso de especificar esto dentro del objeto que define la coleccion:
-     1. Si hay más de una colección definida, todas deben también estarlo a menos que el número de documentos global este definido
-     2. Si solo una está definida, el número global de documentos debe de estarlo
-     3. Si hay más de una colección definida, este valor no puede ser ni mayor ni igual al número global de documentos.
-     4. Si hay más de una colección definida y todas tienen una cantidad definida de documentos, no se debe de especificar la cantidad total de documentos.
-4. Plugins. _todavía no sé cómo, pero me encantaría que se pudieran agregar plugins y que la gente se cuelgue a hacer sus plugins customs jejeje_
-
-Todas las opciones disponibles en el CLI deben de poder ser configuradas en este archivo.
+All the options available on the CLI can be configured through this file:
 
 ```json
 {
@@ -127,30 +138,53 @@ Todas las opciones disponibles en el CLI deben de poder ser configuradas en este
 }
 ```
 
-Otra cosa que estaría interesante de lograr es poder configurar seed it desde el archivo _package.json_:
+# Faker Types
 
-```json
-/// Config on package.json
-"seedit": {
-    "url": "mongodb://<user>:<password>@localgost:27017/",
-    "collections": [
-        {
-            "name": "users",
-            "template": "./path/to/template",
-            "amount": 70
-        },
-        {
-            "name": "toDos",
-            "template": "./path/to/template"
-        }
-    ],
-    "amount": 125
-}
-```
+| Name | Level |
+|-------|-------|
+| Address | supported ✔ |
+| Animal | supported ✔ |
+| Commerce | supported ✔ |
+| Company | supported ✔ |
+| Database | supported ✔ |
+| Datatype | supported ✔ |
+| Date | supported ✔ |
+| Fake | not supported ❌ |
+| Finance | supported ✔ |
+| Git | supported ✔ |
+| Hacker | supported ✔ |
+| Helpers | partially supported ⚠ |
+| Image | supported ✔ |
+| Internet | supported ✔ |
+| Localization | not supported ❌ |
+| Lorem | supported ✔ |
+| Mersenne | not supported ❌ |
+| Music | supported ✔ |
+| Name | supported ✔ |
+| Phone | supported ✔ |
+| Random | supported ✔ |
+| System | supported ✔ |
+| Time | supported ✔ |
+| Unique | not supported ❌ |
+| Vehicle | supported ✔ |
+| Word | supported ✔ |
+
+You can use all the Faker API methods for each one of the supported types (except for the deprecated methods as from Faker v6); you can check [their documentation](FAKERGUIDE) for more information.
+
+> We only support contextualCard(), createCard(), createTransaction() and userCard() methods for the [Helpers type](https://fakerjs.dev/api/helpers.html).
 
 # License
 
-Open-Source MIT License.
+Copyright (c) 2022 Facundo Carbonel / nSeed
 
-Copyright (c) 2021 Facundo Carbonel / Seed It
+This source code is licensed under the MIT license found in the [LICENSE](LICENSE) file in the root directory of this source tree.
 
+# Related
+
+[CONTRIBUTING](CONTRIBUTING) | [ROADMAP](ROADMAP) | [LICENSE](LICENSE) | [ISSUES](ISSUES)
+
+[FAKERGUIDE]: https://fakerjs.dev/guide/
+[CONTRIBUTING]:https://github.com/F2BEAR/nSeed/blob/master/CONTRIBUTING.md
+[ROADMAP]: https://github.com/F2BEAR/nSeed/blob/master/ROADMAP.MD
+[LICENSE]: https://github.com/F2BEAR/nSeed/blob/master/LICENSE
+[ISSUES]: https://github.com/F2BEAR/nSeed/issues
