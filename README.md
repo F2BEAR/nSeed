@@ -7,6 +7,8 @@ _The Node.Js Data Seeder_
     <a href="https://github.com/F2BEAR/nSeed/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green"></a>
 	<a href="https://github.com/F2BEAR/nSeed/issues"><img src="https://img.shields.io/github/issues/F2BEAR/nSeed"></a>
 	<a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg"></a>
+	<a href="https://github.com/F2BEAR/nSeed/blob/master/CONTRIBUTING.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg"></a>
+
 </p>
 
 ----------------
