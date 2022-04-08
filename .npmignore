@@ -3,7 +3,8 @@
 /coverage
 /examples
 /src
+/.vscode
 jest.config.js
 .gitignore
-fakertypes.txt
 tsconfig.json
+tsconfig.build.json
