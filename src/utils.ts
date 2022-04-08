@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2022 Facundo Carbonel / Seed-It
+ * 
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 const { stat } = require('fs')
 const path = require('path')
 const { promisify } = require('util')
@@ -24,7 +30,7 @@ module.exports.hasTemplate = async (tmpPath:string) => {
 
 module.exports.hasConfig = async () => {
   try {
-    const configPath = path.join(process.cwd(), 'seedit.config.json')
+    const configPath = path.join(process.cwd(), 'nseed.config.json')
     const files = await fileExists(configPath)
     if (files.exists === true && files.isFile === true) {
       const config = require(configPath)

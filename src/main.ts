@@ -1,32 +1,12 @@
-const { MongoClient } = require('mongodb')
+/**
+ * Copyright (c) 2022 Facundo Carbonel / nSeed
+ * 
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 const ProgressBar = require('progress')
 const { seed } = require('./seed')
-
-const dbconnect = async (uri: string, db: string, collectionName: string, del: boolean) => {
-  try {
-    console.log(uri)
-    const client = new MongoClient(uri, {
-      useNewUrlParser: true,
-      maxIdleTimeMS: 5000
-    })
-    await client.connect().catch((err: any | unknown) => {
-      throw new Error(err.message)
-    })
-    console.log(`Correctly connected to the database ${db}/${collectionName}`)
-    const collection = client
-      .db(db, { writeConcern: 'majority' })
-      .collection(collectionName)
-    if (del === true) {
-      collection.drop().catch((err: any | unknown) => {
-        throw new Error(err.message)
-      })
-    }
-    return ({ collection, client })
-  } catch (err: any | unknown) {
-	  console.error(err.message)
-    process.exit(0)
-  }
-}
+const {dbconnect} = require('./connection')
 
 const seeder = async (progress: { tick: (arg0: number) => void }, pending: number, seeds: any[], db: { collection: any; client: any }) => {
   try {
@@ -59,11 +39,11 @@ const seeder = async (progress: { tick: (arg0: number) => void }, pending: numbe
   }
 }
 
-module.exports.main = async (uri: string, amount: number, db: string, collectionName: string, path: string, del: boolean) => {
+module.exports.main = async (uri: string, amount: any, db: string, collectionName: string, path: string, del: boolean) => {
   try {
     await dbconnect(uri, db, collectionName, del)
-      .then(async connection => {
-        const length = amount
+      .then(async (connection: { collection: any; client: any }) => {
+        const length = parseInt(amount)
         const pending = length
         const seedProgress = new ProgressBar('Generating the seeds [:bar] :percent :etas', {
           complete: '=',

@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2022 Facundo Carbonel / nSeed
+ * 
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 const arg = require('arg')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
@@ -46,7 +52,7 @@ const parseArguments = (rawArgs: string | any[]) => {
   }
 }
 
-const promptForMissingOptions = async (options: { uri: any; version: boolean; help: boolean; delete: any; template: any; amount: any; collection: any; db: any } | undefined) => {
+const promptForMissingOptions = async (options: { uri: string; version: boolean; help: boolean; delete: boolean; template: string; amount: any; collection: string; db: string } | undefined) => {
   const questions = []
 
   if (!options || options === undefined) {
@@ -110,7 +116,7 @@ const promptForMissingOptions = async (options: { uri: any; version: boolean; he
     process.exit(9)
   }
 
-  const tmplCheck = /^\.(.+)\/([^\/]+)\.json$/gm.test(options.template ? options.template : answers.template)
+  const tmplCheck = /^(\.{1,2})([\/\w]+)(\w\.json)$/gm.test(options.template ? options.template : answers.template)
 
   if (!tmplCheck) {
     console.error(chalk.red.bold('ERROR:'), 'The provided path for the template does not comply with the format ./*/*.json')
@@ -128,7 +134,7 @@ const promptForMissingOptions = async (options: { uri: any; version: boolean; he
   }
 }
 
-const helper = (options: { uri: string; version: boolean; help: boolean; delete: boolean; template: string; amount: number; collection: string; db: string }) => {
+const helper = (options: { uri: string; version: boolean; help: boolean; delete: boolean; template: string; amount: any; collection: string; db: string }) => {
   if (options.version) {
     console.log(version)
   }
@@ -139,7 +145,7 @@ const helper = (options: { uri: string; version: boolean; help: boolean; delete:
 }
 
 module.exports.cli = async (args: string | any[]) => {
-  let options: { uri: string; version: boolean; help: boolean; delete: boolean; template: string; amount: number; collection: string; db: string }= parseArguments(args)
+  let options: { uri: string; version: boolean; help: boolean; delete: boolean; template: string; amount: any; collection: string; db: string }= parseArguments(args)
   const del = false
   if (options.version || options.help) {
     helper(options)
