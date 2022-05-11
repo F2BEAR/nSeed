@@ -48,6 +48,10 @@ Milestones MUST be ordered chronologically, beginning with the early milestones 
 
   This should be possible with both CLI arguments and config files.
 
+- nSeed Data Streams | Future
+
+  This feature will considerably improve the performance of nSeed, giving us the capacity to seed more data than our current threshold of 3 million documents seeded into MongoDB.
+
 - Plugins | Future
 
   Plugins are a great way to grant the user with a level of extensibility for the tools they use. With that in mind, we truly believe that the capability to use (or create) Plugins gives a great advantage to the user, making this tool the flexibility needed to cope with the user's needs.
