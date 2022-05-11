@@ -16,6 +16,14 @@ const id = async (value: string | undefined | null) => {
   }
 }
 
+const newDate = async (value: string | undefined | null) => {
+  if (value === undefined || value === '' || value === null) {
+    return new Date()
+  } else {
+    return new Date(value) 
+  }
+}
+
 const address = async (value: string) => {
   switch (value) {
     case 'cardinalDirection':
@@ -601,6 +609,9 @@ module.exports.fakerTypes = async (type: string, value: string) => {
     case 'ObjectId':
       const idValue = await id(value)
       return idValue
+    case 'newDate':
+      const nDate = await newDate(value)
+      return nDate
     case 'address':
       const addressValue = await address(value)
       return addressValue
