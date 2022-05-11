@@ -23,22 +23,18 @@ const fileExists = async (path:string) => {
   }
 }
 
-module.exports.hasTemplate = async (tmpPath:string) => {
+exports.hasTemplate = async (tmpPath:string) => {
   const exists = await fileExists(tmpPath)
   return exists
 }
 
-module.exports.hasConfig = async () => {
-  try {
-    const configPath = path.join(process.cwd(), 'nseed.config.json')
-    const files = await fileExists(configPath)
-    if (files.exists === true && files.isFile === true) {
-      const config = require(configPath)
-      return { exists: files.exists, config: config }
-    } else {
-      return files
-    }
-  } catch (err) {
-    console.error(err)
+exports.hasConfig = async () => {
+  const configPath = path.join(process.cwd(), 'nseed.config.json')
+  const files = await fileExists(configPath)
+  if (files.exists === true && files.isFile === true) {
+    const config = require(configPath)
+    return { exists: files.exists, config: config }
+  } else {
+    return files
   }
 }

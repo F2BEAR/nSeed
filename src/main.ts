@@ -8,7 +8,7 @@ const ProgressBar = require('progress')
 const { seed } = require('./seed')
 const {dbconnect} = require('./connection')
 
-const seeder = async (progress: { tick: (arg0: number) => void }, pending: number, seeds: any[], db: { collection: any; client: any }) => {
+const seeder = async (progress: { tick: (arg0: number) => void }, pending: number, seeds: any[], db: { collection?: any; client?: any, error?: boolean, message?: string}) => {
   try {
     let i = 0
     while (pending > 0) {
@@ -39,10 +39,16 @@ const seeder = async (progress: { tick: (arg0: number) => void }, pending: numbe
   }
 }
 
-module.exports.main = async (uri: string, amount: any, db: string, collectionName: string, path: string, del: boolean) => {
+exports.seeder = seeder
+
+exports.main = async (uri: string, amount: any, db: string, collectionName: string, path: string, del: boolean) => {
   try {
     await dbconnect(uri, db, collectionName, del)
-      .then(async (connection: { collection: any; client: any }) => {
+      .then(async (connection: { collection?: any; client?: any, error?: boolean, message?: string}) => {
+        if (connection.error) {
+          console.error(connection.message)
+          return
+        }
         const length = parseInt(amount)
         const pending = length
         const seedProgress = new ProgressBar('Generating the seeds [:bar] :percent :etas', {
@@ -57,12 +63,18 @@ module.exports.main = async (uri: string, amount: any, db: string, collectionNam
           width: 20,
           total: length
         })
-        const seeds = await seed(amount, path, seedProgress)
-        progress.tick(0)
-        await seeder(progress, pending, seeds, connection)
+        await seed(amount, path, seedProgress).then(async (seed: undefined | any[]) => {
+          if (seed === undefined) {
+            throw new Error('\nnSeed Closed.')
+          } else {
+            progress.tick(0)
+            await seeder(progress, pending, seed, connection)
+          }
+          
+        })
       })
-  } catch (err) {
-    console.error(err)
-    process.exit(0)
+  } catch (err: any | unknown) {
+    console.error(err.message)
+    process.exit(5)
   }
 }

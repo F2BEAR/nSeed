@@ -20,13 +20,18 @@ module.exports.dbconnect = async (uri: string, db: string, collectionName: strin
         .db(db, { writeConcern: 'majority' })
         .collection(collectionName)
       if (del === true) {
-        collection.drop().catch((err: any | unknown) => {
-          throw new Error(err.message)
+        await collection.stats().then((stats: any)  => {
+          if (stats.size > 0) {
+            collection.drop()
+            console.log('DB Dropped')
+          } else {
+            console.log("The collection can\'t be deleted because it does not exist.")
+          }
         })
       }
       return ({ collection, client })
     } catch (err: any | unknown) {
         console.error(err.message)
-      process.exit(0)
+        return({'error': true, message: err.message})
     }
   }
