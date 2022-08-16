@@ -34,7 +34,7 @@ export class Template {
 							Object.assign(seed, tmpl.default());
 						} else {
 							reject(
-								'The template must be an exported unnamed function which returns an object with the Template.\n\nFor more information review the documentation here:\nhttps://github.com/F2BEAR/nSeed/blob/master/README.md'
+								'The template must be an exported unnamed function which returns an object with the Template.\n\nFor more information review the documentation here:\nhttps://github.com/F2BEAR/nSeed#templates'
 							);
 						};
 					})
