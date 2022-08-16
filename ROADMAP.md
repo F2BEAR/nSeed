@@ -10,7 +10,8 @@ All milestones listed here MUST include:
 
 Milestones MUST be ordered chronologically, beginning with the early milestones into the future.
 
-> Note: If the Status of the milestone is 'released' it is pertinent to add the date and version for the release on the Description section.
+> **Note** 
+> If the Status of the milestone is 'released' it is pertinent to add the date and version for the release on the Description section.
 
 # nSeed - _v1.0.0_
 
@@ -59,7 +60,3 @@ Milestones MUST be ordered chronologically, beginning with the early milestones 
 - Richer Templates | Future
 
   It will be really helpful if we could set _nSeed_ to have unique, required and unrequired (with a percentage of appearance) values through objects on the template describing how often or not they should be generated when we seed our databases.
-   
-- nSeed own data generator | Future
-
-  By now nSeed depends on [Faker.js](https://fakerjs.dev) to generate the data to be seeded and we think that it will be best-suited if we have or own data generator.

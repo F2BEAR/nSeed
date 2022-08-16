@@ -1,4 +1,4 @@
-const { dbconnect } = require('../src/connection')
+import { dbconnect } from '../src/connection'
 
 describe('Test the dbconnect function', () => {
     jest.setTimeout(50000)

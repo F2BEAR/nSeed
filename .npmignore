@@ -1,10 +1,14 @@
-/__test__
+/__tests__
 /cache
 /coverage
 /examples
 /src
 /.vscode
-jest.config.js
+/assets
 .gitignore
+rollup.config.js
+jest.config.ts
 tsconfig.json
 tsconfig.build.json
+CONTRIBUTING.md
+ROADMAP.md

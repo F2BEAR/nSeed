@@ -2,11 +2,11 @@
 	"name": "nseed",
 	"version": "1.0.0",
 	"description": "A NodeJS CLI Tool for database seeding with auto-generated data.",
-	"main": "lib/index.js",
-	"types": "lib/index.d.ts",
+	"main": "lib/main.min.js",
+	"types": "lib/main.min.d.ts",
 	"bin": {
-		"nSeed": "lib/index.js",
-		"nseed": "lib/index.js"
+		"nSeed": "lib/main.min.js",
+		"nseed": "lib/main.min.js"
 	},
 	"publishConfig": {
 		"access": "public",
@@ -14,11 +14,14 @@
 	},
 	"scripts": {
 		"test": "jest",
-		"standard": "npx standard",
-		"standard-fix": "npx standard --fix",
-		"build": "npx tsc -p tsconfig.build.json --watch",
-		"commit": "npx cz"
+		"start": "cd examples && node --trace-warnings ../lib/main.min.js",
+		"standard": "ts-standard",
+		"standard:fix": "npm run standard --fix",
+		"commit": "npx cz",
+		"build:dev": "rollup -c -w",
+		"build:prod": "set NODE_ENV=production&& rollup -c"
 	},
+	"type": "commonjs",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/F2BEAR/nSeed"
@@ -32,12 +35,14 @@
 		"nseed",
 		"mongodb",
 		"seeder",
-		"db"
+		"db",
+		"seed",
+		"db-seeding"
 	],
 	"author": "Facundo Carbonel",
 	"license": "MIT",
 	"dependencies": {
-		"@faker-js/faker": "^6.0.0-alpha.7",
+		"@faker-js/faker": "7.2.0",
 		"arg": "^5.0.1",
 		"cli-table": "^0.3.6",
 		"inquirer": "^8.2.0",
@@ -45,26 +50,37 @@
 		"progress": "^2.0.3"
 	},
 	"devDependencies": {
-		"@types/jest": "^27.4.1",
+		"@rollup/plugin-typescript": "^8.3.3",
+		"@types/cli-table": "^0.3.0",
+		"@types/inquirer": "^8.2.1",
+		"@types/jest": "^27.5.2",
 		"@types/node": "^17.0.23",
+		"@types/progress": "^2.0.5",
 		"commitizen": "^4.2.4",
-		"cz-conventional-changelog": "^3.3.0",
-		"jest": "^27.3.1",
+		"cz-conventional-changelog": "^3.0.1",
+		"jest": "^27.5.1",
+		"jest-mock-process": "^2.0.0",
 		"mock-argv": "^2.0.8",
 		"mock-cwd": "^1.0.0",
-		"standard": "^16.0.4",
-		"ts-jest": "^27.1.4",
+		"rollup": "^2.76.0",
+		"rollup-plugin-cleanup": "^3.2.1",
+		"rollup-plugin-dts": "^4.2.2",
+		"rollup-plugin-license": "^2.8.1",
+		"rollup-plugin-preserve-shebang": "^1.0.1",
+		"rollup-plugin-terser": "^7.0.2",
+		"terser": "^5.14.1",
+		"ts-jest": "^27.1.5",
 		"ts-node": "^10.7.0",
+		"ts-standard": "^11.0.0",
 		"typescript": "^4.6.3"
 	},
-	"standard": {
+	"ts-standard": {
 		"ignore": [
-			"/__tests__/*",
-			"/lib/*",
-			"/coverage/*",
-			"/node_modules/*",
-			"/examples/*",
-			"jest.config.js"
+			"/__tests__/",
+			"/lib/",
+			"/examples/",
+			"jest.config.ts",
+			"rollup.config.js"
 		]
 	},
 	"config": {

@@ -1,40 +1,37 @@
-/**
- * Copyright (c) 2022 Facundo Carbonel / Seed-It
- * 
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-const { stat } = require('fs')
-const path = require('path')
-const { promisify } = require('util')
+import { statSync } from 'fs';
+import { join } from 'path';
 
-const fsStat = promisify(stat)
+export interface FileExists {
+  exists: boolean
+  message?: string
+  isFile?: boolean
+  config?: Config
+};
 
-const fileExists = async (path:string) => {
-  try {
-    const stat = await fsStat(path).catch((err: string | undefined) => {
-      throw new Error(err)
-    })
-    const file = stat.isFile()
-    return { exists: true, isFile: file }
-  } catch (err: any | unknown) {
-    const message = err.message
-    return { exists: false, message: message }
-  }
-}
+export interface Config {
+  url: string
+  db: string
+  collection: string
+  template: string
+  amount: number
+  delete?: boolean
+};
 
-exports.hasTemplate = async (tmpPath:string) => {
-  const exists = await fileExists(tmpPath)
-  return exists
-}
+export const fileExists = (path: string) => {
+  let fileStat = statSync(path, {throwIfNoEntry:false});
+  if (!fileStat) return { exists: false, message: `ENOENT: no such file or directory \'${path}\'` };
+  const file = fileStat.isFile();
+  return { exists: true, isFile: file };
+};
 
-exports.hasConfig = async () => {
-  const configPath = path.join(process.cwd(), 'nseed.config.json')
-  const files = await fileExists(configPath)
-  if (files.exists === true && files.isFile === true) {
-    const config = require(configPath)
-    return { exists: files.exists, config: config }
+export const hasConfig = async (): Promise<FileExists> => {
+  const configPath = join(process.cwd(), 'nseed.config.json');
+  const files = fileExists(configPath);
+  if (files.exists && files.isFile === true) {
+    const dynamicImport = await import(configPath);
+    const config: Config = dynamicImport.default;
+    return { exists: files.exists, config: config };
   } else {
-    return files
-  }
-}
+    return files;
+  };
+};

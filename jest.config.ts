@@ -8,7 +8,6 @@ const config: Config.InitialOptions = {
 	collectCoverageFrom: [
 		'**/*.{ts}',
 		'**/src/**',
-		'!**/src/types.ts',
 		'!**/src/index.ts',
 		'!**/examples/**',
 		'!**/lib/**',
