@@ -3,7 +3,7 @@
 <div>
 	<img src="./logo.svg" alt="Logo" width="200" height="200">
 	<div>
-		<a href="https://www.npmjs.com/package/nseed"><img src="https://img.shields.io/npm/v/nseed"></a>
+		<a href="https://www.npmjs.com/package/nseed"><img src="https://img.shields.io/npm/v/nseed/latest"></a>
 		<a href="https://github.com/F2BEAR/nSeed/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green"></a>
 		<a href="https://github.com/F2BEAR/nSeed/issues"><img src="https://img.shields.io/github/issues/F2BEAR/nSeed"></a>
 		<a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg"></a>
@@ -185,12 +185,5 @@ Copyright (c) 2022 Facundo Carbonel / nSeed
 
 This source code is licensed under the MIT license found in the [LICENSE](LICENSE) file in the root directory of this source tree.
 
-# Related
-
-[CONTRIBUTING](CONTRIBUTING) | [ROADMAP](ROADMAP) | [LICENSE](LICENSE) | [ISSUES](ISSUES)
-
 [FAKERGUIDE]: https://fakerjs.dev/guide/
-[CONTRIBUTING]: https://github.com/F2BEAR/nSeed/blob/main/CONTRIBUTING.md
-[ROADMAP]: https://github.com/F2BEAR/nSeed/blob/main/ROADMAP.MD
 [LICENSE]: https://github.com/F2BEAR/nSeed/blob/main/LICENSE
-[ISSUES]: https://github.com/F2BEAR/nSeed/issues
