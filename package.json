@@ -1,6 +1,6 @@
 {
 	"name": "nseed",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A NodeJS CLI Tool for database seeding with auto-generated data.",
 	"main": "lib/main.min.js",
 	"types": "lib/main.min.d.ts",
@@ -10,7 +10,7 @@
 	},
 	"publishConfig": {
 		"access": "public",
-		"tag": "1.0.0"
+		"tag": "1.0.1"
 	},
 	"scripts": {
 		"test": "jest",

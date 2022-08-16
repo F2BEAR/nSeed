@@ -1,10 +1,8 @@
 # nSeed
 
-<div style="display:flex;justify-content:center;flex-direction:column;align-items:center">
-	<span style="width: 16rem;height:16rem">
-		<img src="./logo.svg" alt="Logo">
-	</span>
-	<div style="margin-top:2rem;margin-bottom:2rem;">
+<div>
+	<img src="./logo.svg" alt="Logo" width="200" height="200">
+	<div>
 		<a href="https://www.npmjs.com/package/nseed"><img src="https://img.shields.io/npm/v/nseed"></a>
 		<a href="https://github.com/F2BEAR/nSeed/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green"></a>
 		<a href="https://github.com/F2BEAR/nSeed/issues"><img src="https://img.shields.io/github/issues/F2BEAR/nSeed"></a>
@@ -12,7 +10,7 @@
 		<a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg"></a>
 		<a href="https://discord.gg/QXRNvTFu"><img src="https://img.shields.io/badge/Chat-Discord-blue"></a>
 	</div>
-	<p style="font-style:italic;font-size:25px;">The Node.Js Database Seeder</p>
+	<p>The Node.Js Database Seeder</p>
 </div>
 
 ----------------
